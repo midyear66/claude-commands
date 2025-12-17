@@ -30,24 +30,42 @@ A workflow command that automates the git commit and push process with intellige
 
 ---
 
-### `/info` - Generate Documentation Summary
+### `/info` - Intelligent Repository Analysis
 
 **File:** `info.md`
 
-A command that reads all documentation files in the current directory and generates an INFO.md summary file.
+An intelligent command that analyzes any repository type (code, meeting transcripts, documents, or data) and generates an adaptive INFO.md summary that reflects the actual content.
 
 **What it does:**
-1. Scans for documentation files (`.md`, `.txt`, `.rst`) in the current directory and one level down
-2. Reads and analyzes all found documentation
-3. Creates an INFO.md file containing:
-   - **Executive Summary**: Comprehensive 4-8 sentence overview of the project's purpose, goals, technologies, and status
-   - **Key Points**: Bullet list of important facts, features, requirements, and decisions
-   - **Action Items**: Checkbox list of TODOs, pending tasks, and recommended next steps
+1. **Discovers all files recursively** using smart filtering:
+   - Includes: all source code, documentation (.md, .txt, .rst, .pdf), configs, data files
+   - Excludes: dependencies (node_modules, .git), build artifacts, images, lock files
+2. **Detects repository type** by analyzing file composition and content:
+   - Code Repository (>40% source files or has package.json/requirements.txt)
+   - Meeting Repository (>40% transcripts or frequent meeting keywords)
+   - Document Repository (>60% docs, <20% code)
+   - Data Repository (>40% data files)
+   - Mixed Repository (diverse content)
+3. **Generates adaptive INFO.md** with content-specific sections:
+   - **Code repos**: Technologies, dependencies, project structure, functionality, setup
+   - **Meeting repos**: Key decisions, topics/themes, action items with ownership, participants, timeline
+   - **Document repos**: Document types, main themes, key information
+   - **Mixed repos**: Combined sections relevant to present content types
+
+**Key Features:**
+- PDF support for documentation and meeting transcripts
+- Extracts action items with ownership from meetings (e.g., "Sarah will complete API docs")
+- Identifies key decisions ("decided to", "agreed that")
+- Finds TODO/FIXME comments in code
+- Maps project structure and technologies automatically
+- Generates scannable, comprehensive summaries
 
 **Usage:**
 ```
 /info
 ```
+
+**Best for:** Small projects (<100 files) across any domain - codebases, meeting folders, documentation collections, research repos
 
 **Allowed tools:** `Glob`, `Grep`, `Read`, `Write`
 
