@@ -28,6 +28,31 @@ A workflow command that automates the git commit and push process with intellige
 
 **Allowed tools:** `git add`, `git status`, `git diff`, `git commit`, `git push`, `git log`
 
+---
+
+### `/info` - Generate Documentation Summary
+
+**File:** `info.md`
+
+A command that reads all documentation files in the current directory and generates an INFO.md summary file.
+
+**What it does:**
+1. Scans for documentation files (`.md`, `.txt`, `.rst`) in the current directory and one level down
+2. Reads and analyzes all found documentation
+3. Creates an INFO.md file containing:
+   - **Executive Summary**: Comprehensive 4-8 sentence overview of the project's purpose, goals, technologies, and status
+   - **Key Points**: Bullet list of important facts, features, requirements, and decisions
+   - **Action Items**: Checkbox list of TODOs, pending tasks, and recommended next steps
+
+**Usage:**
+```
+/info
+```
+
+**Allowed tools:** `Glob`, `Grep`, `Read`, `Write`
+
+---
+
 ## Adding New Commands
 
 To create a new command:
