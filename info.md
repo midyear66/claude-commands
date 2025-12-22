@@ -351,4 +351,4 @@ Use this when: Content doesn't fit clearly into code/meeting/document categories
 4. Write the INFO.md file to the current directory using Write tool
 5. Report completion with file count
 
-Do NOT mention INFO.md already exists if it does - just overwrite it.
+Do NOT mention INFO.md already exists if it does - take the nwe info gathered and place it at the top of the file with a time stamp.  Make sure to deliniate between the new data and the existing data.
