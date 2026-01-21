@@ -71,6 +71,26 @@ An intelligent command that analyzes any repository type (code, meeting transcri
 
 ---
 
+### `/resize-app-store` - Resize Screenshots for App Store
+
+**File:** `resize-app-store.md`
+
+Resizes screenshot images to App Store dimensions based on orientation.
+
+**What it does:**
+1. Finds images with "portrait" in the filename and resizes to 1242x2688
+2. Finds images with "landscape" in the filename and resizes to 2688x1242
+3. Verifies the dimensions after resizing
+
+**Usage:**
+```
+/resize-app-store /path/to/screenshots
+```
+
+**Allowed tools:** `sips`
+
+---
+
 ## Adding New Commands
 
 To create a new command:
