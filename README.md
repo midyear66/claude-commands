@@ -15,18 +15,43 @@ Custom commands are user-defined operations that extend Claude Code's functional
 A workflow command that automates the git commit and push process with intelligent commit message generation.
 
 **What it does:**
-1. Stages all changes (`git add .`)
-2. Analyzes the staged changes
-3. Generates a descriptive commit message following the repo's existing style
-4. Creates the commit with Claude Code attribution
-5. Pushes to the current branch
+1. Refreshes `README.md` if one exists in the project root (updates it to reflect new features, design changes, etc.)
+2. Stages all changes (`git add .`)
+3. Analyzes the staged changes
+4. Generates a descriptive commit message following the repo's existing style
+5. Creates the commit with Claude Code attribution
+6. Pushes to the current branch
 
 **Usage:**
 ```
 /cp
 ```
 
-**Allowed tools:** `git add`, `git status`, `git diff`, `git commit`, `git push`, `git log`
+**Allowed tools:** `git add`, `git status`, `git diff`, `git commit`, `git push`, `git log`, `Read`, `Edit`, `Glob`
+
+---
+
+### `/cpm` - Commit, Push, and Merge
+
+**File:** `cpm.md`
+
+Extends `/cp` by also merging the current branch into main after pushing.
+
+**What it does:**
+1. Refreshes `README.md` if one exists in the project root (updates it to reflect new features, design changes, etc.)
+2. Stages all changes (`git add .`)
+3. Analyzes the staged changes
+4. Generates a descriptive commit message following the repo's existing style
+5. Creates the commit with Claude Code attribution
+6. Pushes to the current branch
+7. Merges changes into main, then switches back to the original branch
+
+**Usage:**
+```
+/cpm
+```
+
+**Allowed tools:** `git add`, `git status`, `git diff`, `git commit`, `git push`, `git log`, `git checkout`, `git merge`, `Read`, `Edit`, `Glob`
 
 ---
 
@@ -80,7 +105,8 @@ Resizes screenshot images to App Store dimensions based on orientation.
 **What it does:**
 1. Finds images with "portrait" in the filename and resizes to 1242x2688
 2. Finds images with "landscape" in the filename and resizes to 2688x1242
-3. Verifies the dimensions after resizing
+3. Removes all alpha channels and transparencies by saving as JPEG
+4. Verifies the dimensions after resizing
 
 **Usage:**
 ```
