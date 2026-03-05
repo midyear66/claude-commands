@@ -8,6 +8,7 @@
 
   1. Find images with "portrait" in the filename and resize to 1242x2688
   2. Find images with "landscape" in the filename and resize to 2688x1242
+  3. Remove all alpha channels and transparencies by saving as jpeg
 
   Directory to process: $ARGUMENTS
 
