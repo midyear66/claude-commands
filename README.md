@@ -96,6 +96,35 @@ An intelligent command that analyzes any repository type (code, meeting transcri
 
 ---
 
+### `/add-app` - Add or Update App Page on SSETCOweb
+
+**File:** `add-app.md`
+
+Automates adding or updating an app page on the SSETCOweb site from a GitHub repo URL.
+
+**What it does:**
+1. Fetches repo README and metadata from GitHub
+2. Determines if this is a new app or an update to an existing one
+3. Reads existing patterns from the SSETCOweb codebase (constants, landing pages, detail pages, blog posts)
+4. Creates or updates all necessary files:
+   - `lib/constants.ts` entry (app data + navigation)
+   - Landing page card on the relevant section page
+   - Detail page at `app/apps/{slug}/page.tsx` with animations, features grid, and architecture section
+   - Blog post in `content/blog/` (new apps only)
+   - README.md app and route entries
+5. Provides a summary of changes and reminds you to build and verify
+
+**Usage:**
+```
+/add-app https://github.com/owner/repo [Apps|Docker|MTB]
+```
+
+If no section is specified, it infers from the repo content (iOS → Apps, Docker/self-hosted → Docker, cycling/bike → MTB).
+
+**Allowed tools:** `Read`, `Write`, `Edit`, `Glob`, `Grep`, `Bash(ls:*)`, `Agent`, `WebFetch`
+
+---
+
 ### `/resize-app-store` - Resize Screenshots for App Store
 
 **File:** `resize-app-store.md`
