@@ -125,6 +125,29 @@ If no section is specified, it infers from the repo content (iOS → Apps, Docke
 
 ---
 
+### `/project-update` - Update Project Tracker
+
+**File:** `project-update.md`
+
+Creates or updates an entry in the Project Tracker (API at `http://localhost:3001`) for the project in the current working directory.
+
+**What it does:**
+1. Gathers project info from the cwd (name, GitHub URL, README description, recent commits, inferred tags)
+2. Queries the Project Tracker API and tries to match an existing project by GitHub URL, then by name
+3. Asks the user to confirm a matched project, pick from multiple candidates, or create a new one
+4. Shows the planned changes (log entry, description/URL fill-ins, new tags, status bump) and asks before executing
+5. Calls the tracker API to create the project or update fields, append a log entry, and adjust status
+6. Reports the resulting project state back to the user
+
+**Usage:**
+```
+/project-update
+```
+
+**Allowed tools:** `git remote`, `git log`, `git branch`, `git diff`, `git status`, `curl`, `basename`, `pwd`, `Read`, `Glob`, `Grep`, `AskUserQuestion`
+
+---
+
 ### `/resize-app-store` - Resize Screenshots for App Store
 
 **File:** `resize-app-store.md`
