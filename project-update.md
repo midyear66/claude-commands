@@ -13,7 +13,7 @@ Run these commands first to gather context (use the Bash tool):
 
 The directory name is the last path component of `pwd`.
 
-Then update the Project Tracker (API at http://localhost:3001) with information about the project in the current working directory.
+Then update the Project Tracker (API at http://10.1.1.91:3001) with information about the project in the current working directory.
 
 ### Step 1: Gather Project Info
 
@@ -26,7 +26,7 @@ Collect from the current directory:
 
 ### Step 2: Find Existing Project
 
-Query the tracker: `curl -s http://localhost:3001/api/projects`
+Query the tracker: `curl -s http://10.1.1.91:3001/api/projects`
 
 Try to match in this order (most reliable first):
 1. **GitHub URL match** — compare the git remote URL against each project's `github` field. Normalize both (strip `.git` suffix, trailing slashes, compare case-insensitively)
@@ -69,10 +69,10 @@ Let the user modify any field before confirming.
 ### Step 4: Execute
 
 Use curl to call the Project Tracker API:
-- **Create**: `POST http://localhost:3001/api/projects`
-- **Update fields**: `PUT http://localhost:3001/api/projects/:id`
-- **Add log entry**: `POST http://localhost:3001/api/projects/:id/log`
-- **Update status**: `PATCH http://localhost:3001/api/projects/:id/status`
+- **Create**: `POST http://10.1.1.91:3001/api/projects`
+- **Update fields**: `PUT http://10.1.1.91:3001/api/projects/:id`
+- **Add log entry**: `POST http://10.1.1.91:3001/api/projects/:id/log`
+- **Update status**: `PATCH http://10.1.1.91:3001/api/projects/:id/status`
 
 ### Step 5: Confirm
 
