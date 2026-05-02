@@ -12,22 +12,25 @@ Custom commands are user-defined operations that extend Claude Code's functional
 
 **File:** `cp.md`
 
-A workflow command that automates the git commit and push process with intelligent commit message generation.
+A workflow command that automates the git commit and push process with intelligent commit message generation. Works in both initialized and uninitialized directories.
 
 **What it does:**
-1. Refreshes `README.md` if one exists in the project root (updates it to reflect new features, design changes, etc.)
-2. Stages all changes (`git add .`)
-3. Analyzes the staged changes
-4. Generates a descriptive commit message following the repo's existing style
-5. Creates the commit with Claude Code attribution
-6. Pushes to the current branch
+1. Detects whether the current directory is a git repo; if not, initializes one with `git init -b main`
+2. Gathers context (current branch, status, diffs, recent commits, remotes)
+3. Refreshes `README.md` if one exists in the project root (updates it to reflect new features, design changes, etc.)
+4. Sets the local git identity (`Bob Sanford` / `midyear66@gmail.com`) for this repo
+5. Stages all changes (`git add .`)
+6. Analyzes the staged changes
+7. Generates a descriptive commit message following the repo's existing style
+8. Creates the commit with Claude Code attribution
+9. Pushes to the current branch (skipped if no remote is configured)
 
 **Usage:**
 ```
 /cp
 ```
 
-**Allowed tools:** `git add`, `git status`, `git diff`, `git commit`, `git push`, `git log`, `Read`, `Edit`, `Glob`
+**Allowed tools:** `git add`, `git status`, `git diff`, `git commit`, `git push`, `git log`, `git init`, `git branch`, `git rev-parse`, `git remote`, `git config`, `Read`, `Edit`, `Glob`
 
 ---
 
@@ -38,20 +41,23 @@ A workflow command that automates the git commit and push process with intellige
 Extends `/cp` by also merging the current branch into main after pushing.
 
 **What it does:**
-1. Refreshes `README.md` if one exists in the project root (updates it to reflect new features, design changes, etc.)
-2. Stages all changes (`git add .`)
-3. Analyzes the staged changes
-4. Generates a descriptive commit message following the repo's existing style
-5. Creates the commit with Claude Code attribution
-6. Pushes to the current branch
-7. Merges changes into main, then switches back to the original branch
+1. Detects whether the current directory is a git repo; if not, initializes one with `git init -b main` (and skips the push and merge steps)
+2. Gathers context (current branch, status, diffs, recent commits, remotes)
+3. Refreshes `README.md` if one exists in the project root (updates it to reflect new features, design changes, etc.)
+4. Sets the local git identity (`Bob Sanford` / `midyear66@gmail.com`) for this repo
+5. Stages all changes (`git add .`)
+6. Analyzes the staged changes
+7. Generates a descriptive commit message following the repo's existing style
+8. Creates the commit with Claude Code attribution
+9. Pushes to the current branch (skipped if no remote is configured)
+10. Merges changes into main and pushes main, then switches back to the original branch (skipped if already on main)
 
 **Usage:**
 ```
 /cpm
 ```
 
-**Allowed tools:** `git add`, `git status`, `git diff`, `git commit`, `git push`, `git log`, `git checkout`, `git merge`, `Read`, `Edit`, `Glob`
+**Allowed tools:** `git add`, `git status`, `git diff`, `git commit`, `git push`, `git log`, `git checkout`, `git merge`, `git init`, `git branch`, `git rev-parse`, `git remote`, `git config`, `Read`, `Edit`, `Glob`
 
 ---
 
@@ -125,19 +131,19 @@ If no section is specified, it infers from the repo content (iOS → Apps, Docke
 
 ---
 
-### `/project-update` - Update Project Tracker
+### `/project-update` - Sync Project Tracker
 
 **File:** `project-update.md`
 
-Creates or updates an entry in the Project Tracker (API at `http://localhost:3001`) for the project in the current working directory.
+Creates or updates a project entry in the local Project Tracker (API at `http://localhost:3001`) using info gathered from the current working directory.
 
 **What it does:**
-1. Gathers project info from the cwd (name, GitHub URL, README description, recent commits, inferred tags)
-2. Queries the Project Tracker API and tries to match an existing project by GitHub URL, then by name
-3. Asks the user to confirm a matched project, pick from multiple candidates, or create a new one
-4. Shows the planned changes (log entry, description/URL fill-ins, new tags, status bump) and asks before executing
-5. Calls the tracker API to create the project or update fields, append a log entry, and adjust status
-6. Reports the resulting project state back to the user
+1. Gathers context: current directory name, git remote URL, current branch, recent commits
+2. Detects project metadata: name, GitHub URL, description (from README.md), recent activity, and tags (inferred from file extensions, `package.json`, `Dockerfile`, etc.)
+3. Queries the tracker for an existing project, matching first by GitHub URL then by name (asks the user to disambiguate when multiple candidates match)
+4. Confirms the planned changes with the user before making them — for an existing project this includes adding a log entry, filling in empty fields, adding new tags, and reactivating the project if it was marked idle/stale; for a new project it shows the proposed name, description, GitHub URL, status, tags, and initial log entry
+5. Calls the tracker API to create the project, update fields, append the log entry, or change status
+6. Reports the resulting state of the project back to the user
 
 **Usage:**
 ```

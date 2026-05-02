@@ -3,16 +3,17 @@ allowed-tools: Bash(git remote:*), Bash(git log:*), Bash(git branch:*), Bash(git
 description: Create or update a project in the Project Tracker from the current working directory
 ---
 
-## Context
-- Current directory: !`pwd`
-- Directory name: !`basename $(pwd)`
-- Git remote (if any): !`git remote get-url origin 2>/dev/null || echo "no git remote"`
-- Current branch: !`git branch --show-current 2>/dev/null || echo "not a git repo"`
-- Recent commits: !`git log --oneline -5 2>/dev/null || echo "no git history"`
-
 ## Task
 
-Update the Project Tracker (API at http://localhost:3001) with information about the project in the current working directory.
+Run these commands first to gather context (use the Bash tool):
+- `pwd` — current directory
+- `git remote get-url origin 2>/dev/null || echo "no git remote"` — repo URL
+- `git branch --show-current 2>/dev/null || echo "not a git repo"` — branch
+- `git log --oneline -5 2>/dev/null || echo "no git history"` — recent commits
+
+The directory name is the last path component of `pwd`.
+
+Then update the Project Tracker (API at http://localhost:3001) with information about the project in the current working directory.
 
 ### Step 1: Gather Project Info
 
